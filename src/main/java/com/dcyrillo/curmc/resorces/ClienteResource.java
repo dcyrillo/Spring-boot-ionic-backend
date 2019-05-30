@@ -1,5 +1,4 @@
 package com.dcyrillo.curmc.resorces;
-
 import java.util.ArrayList;
 
 import java.util.List;
@@ -11,19 +10,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dcyrillo.curmc.domain.Categoria;
-import com.dcyrillo.curmc.services.CategoriaService;
+import com.dcyrillo.curmc.domain.Cliente;
+import com.dcyrillo.curmc.services.ClienteService;
 
 @RestController
-@RequestMapping(value="/categorias")
+@RequestMapping(value="/clientes")
 
-public class CategoriaResource {
+public class ClienteResource {
 	@Autowired
-	private CategoriaService service;
+	private ClienteService service;
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
-		Categoria obj=service.buscar(id);
+		Cliente obj=service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 		
 		
