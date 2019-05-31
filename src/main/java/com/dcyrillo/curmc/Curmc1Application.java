@@ -1,5 +1,6 @@
 package com.dcyrillo.curmc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,19 @@ import com.dcyrillo.curmc.domain.Cidade;
 import com.dcyrillo.curmc.domain.Cliente;
 import com.dcyrillo.curmc.domain.Endereco;
 import com.dcyrillo.curmc.domain.Estado;
+import com.dcyrillo.curmc.domain.Pagamento;
+import com.dcyrillo.curmc.domain.PagamentoComCartao;
+import com.dcyrillo.curmc.domain.Pedido;
 import com.dcyrillo.curmc.domain.Produto;
+import com.dcyrillo.curmc.domain.enums.EstadoPagamento;
 import com.dcyrillo.curmc.domain.enums.TipoCliente;
 import com.dcyrillo.curmc.repositories.CategoriaRepository;
 import com.dcyrillo.curmc.repositories.CidadeRepository;
 import com.dcyrillo.curmc.repositories.ClienteRepository;
 import com.dcyrillo.curmc.repositories.EnderecoRepository;
 import com.dcyrillo.curmc.repositories.EstadoRepository;
+import com.dcyrillo.curmc.repositories.PagamentoRepository;
+import com.dcyrillo.curmc.repositories.PedidoRepository;
 import com.dcyrillo.curmc.repositories.ProdutoRepository;
 
 
@@ -36,6 +43,10 @@ public class Curmc1Application implements CommandLineRunner {
 	private ClienteRepository clienteRepository;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
+	@Autowired
+	private PedidoRepository pedidoRepository;
 	
 	
 	public static void main(String[] args) {
@@ -82,6 +93,23 @@ public class Curmc1Application implements CommandLineRunner {
 	    cli1.getEnderecos().addAll(Arrays.asList(e1,e2));	    
 	    clienteRepository.saveAll(Arrays.asList(cli1));
 	    enderecoRepository.saveAll(Arrays.asList(e1,e2));
+	    
+	    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	    Pedido ped1=new Pedido(null,sdf.parse("30/09/2017 10:32"),cli1,e1);
+	    Pedido ped2=new Pedido(null,sdf.parse("10/10/2017 19:35"),cli1,e2);
+	    
+	    Pagamento pagto1=new PagamentoComCartao(null,EstadoPagamento.QUITADO,ped1,6);
+	    ped1.setPagamento(pagto1);
+	    
+	    Pagamento pagto2=new PagamentoComCartao(null,EstadoPagamento.PENDENTE,ped2,null);
+	    ped2.setPagamento(pagto2);
+	    
+	    cli1.getPedidos().addAll(Arrays.asList(ped1,ped2));
+
+	    pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
+	    pagamentoRepository.saveAll(Arrays.asList(pagto1,pagto2));
+		
+	
 	}
 
 }
