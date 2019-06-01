@@ -1,5 +1,6 @@
 package com.dcyrillo.curmc.services;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dcyrillo.curmc.domain.Categoria;
+import com.dcyrillo.curmc.dto.CategoriaDto;
 import com.dcyrillo.curmc.repositories.CategoriaRepository;
 
 import com.dcyrillo.curmc.services.exception.ObjectNotFoundException;
@@ -43,9 +45,10 @@ public class CategoriaService {
 			
 			throw new Exception("Não é possível excluir uma categoria que possui produtos");
 		}
-		
-		
-	
 	}
+	public List<Categoria> findAll(){
+		return repo.findAll();
+	}
+	
 	
 }
