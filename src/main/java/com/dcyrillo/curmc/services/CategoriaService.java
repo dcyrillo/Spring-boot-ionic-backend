@@ -4,11 +4,14 @@ import java.util.Optional;
 
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.dcyrillo.curmc.domain.Categoria;
 import com.dcyrillo.curmc.repositories.CategoriaRepository;
+
 import com.dcyrillo.curmc.services.exception.ObjectNotFoundException;
 
 @Service
@@ -26,8 +29,23 @@ public class CategoriaService {
 		obj.setId(null);
 		return repo.save(obj);
 	}
-	public Categoria update (Categoria obj) {
-	find(obj.getId());
-	return repo.save(obj);
+	public Categoria update(Categoria obj) {
+		find(obj.getId());
+		return repo.save(obj);
+		
 	}
+	public void delete(Integer id) throws Exception {
+		find(id);
+		try {
+		repo.deleteById(id);
+		}
+		catch(Exception e) {
+			
+			throw new Exception("Não é possível excluir uma categoria que possui produtos");
+		}
+		
+		
+	
+	}
+	
 }
