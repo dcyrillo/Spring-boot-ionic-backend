@@ -1,9 +1,7 @@
 package com.dcyrillo.curmc.resorces;
 
-import java.net.URI;
-import java.util.ArrayList;
-
-
+import java.net.URI
+;
 import java.util.List;
 import java.util.stream.Collectors;
 
