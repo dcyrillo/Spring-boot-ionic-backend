@@ -18,9 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.dcyrillo.curmc.domain.Categoria;
 import com.dcyrillo.curmc.domain.Cliente;
 import com.dcyrillo.curmc.domain.Cliente;
+import com.dcyrillo.curmc.dto.CategoriaDto;
 import com.dcyrillo.curmc.dto.ClienteDto;
+import com.dcyrillo.curmc.dto.ClienteNewDTO;
 import com.dcyrillo.curmc.services.ClienteService;
 
 @RestController
@@ -37,12 +40,13 @@ public class ClienteResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void>  insert(@Valid @RequestBody ClienteDto objDto){
-		Cliente obj= service.fromDto(objDto);
-		obj= service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) {
+		Cliente obj = service.fromDto(objDto);
+		obj = service.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
-	}
+}
 	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
 	public  ResponseEntity<Void>  update(@RequestBody @Valid ClienteDto objDto,@PathVariable Integer id){
 		Cliente obj= service.fromDto(objDto);
@@ -74,6 +78,7 @@ public class ClienteResource {
 		Page<ClienteDto> listDto = list.map(obj -> new ClienteDto(obj));
 		return ResponseEntity.ok().body(listDto);
 	}
+	
 	
 	
 }
