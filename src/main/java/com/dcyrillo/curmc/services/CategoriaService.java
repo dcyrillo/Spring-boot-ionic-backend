@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.dcyrillo.curmc.domain.Categoria;
+import com.dcyrillo.curmc.domain.Cliente;
 import com.dcyrillo.curmc.dto.CategoriaDto;
 import com.dcyrillo.curmc.repositories.CategoriaRepository;
 
@@ -34,7 +35,8 @@ public class CategoriaService {
 		return repo.save(obj);
 	}
 	public Categoria update(Categoria obj) {
-		find(obj.getId());
+	Categoria c=find(obj.getId());
+		updateData(c,obj);
 		return repo.save(obj);
 		
 	}
@@ -60,5 +62,10 @@ public class CategoriaService {
 	}
 	public Categoria fromDto(CategoriaDto objDto) {
 		return new Categoria(objDto.getId(),objDto.getNome());
+	}
+	private void updateData( Categoria c,Categoria obj) {
+		c.setNome(obj.getNome());
+		
+		
 	}
 }
